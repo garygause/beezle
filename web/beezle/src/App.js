@@ -1,8 +1,10 @@
 import React from "react";
 
+import About from "./components/about/about.component";
 import Header from "./components/header/header.component";
 import Search from "./components/search/search.component";
 import Results from "./components/results/results.component";
+import Footer from "./components/footer/footer.componenet";
 
 import "./App.css";
 
@@ -10,31 +12,39 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      letters: ["a", "b", "c", "d", "e", "f", "g"],
-      requiredLetter: "",
       results: [],
     };
   }
 
+  fetchResults = (letters) => {
+    const results = ["ball", "balloon"];
+    this.setState({ results: results });
+  };
+
+  handleOutput = (output) => {
+    console.log([...output]);
+    if (output.length === 7) {
+      console.log("got 7 letters");
+      this.fetchResults([...output]);
+    } else {
+      this.setState({ results: [] });
+    }
+  };
+
+  showHideContent = () => {
+    if (this.state.showContent) {
+    }
+  };
+
   render() {
-    const { letters, requiredLetter, results } = this.state;
+    const { results } = this.state;
     return (
       <div>
         <Header title="Beezle" />
-        <div className="info">
-          <span>
-            What is Beezle? *expandable*
-            <br />
-            Ever wonder what that 10 letter word in the NY Times Spelling Bee
-            mini game was that you failed to figure out? That drove me nuts.
-            Beezle allows you to see potential solutions to the mini game. You
-            should not use this until after you have used up your tries in the
-            game for the day. It is a great game, but this is a major spoiler.
-          </span>
-          <div className="download-link">Download NY Times App</div>
-        </div>
-        <Search letters={letters} requiredLetter={requiredLetter} />
+        <About />
+        <Search handleOutput={this.handleOutput} />
         <Results results={results} />
+        <Footer />
       </div>
     );
   }
